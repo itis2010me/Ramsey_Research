@@ -1,5 +1,6 @@
 
-  Shatter 0.3 
+  **NOTE: This is a modified version of Shatter 0.3**
+  Original:
   Idenifying Symmetries in CNF Instances
 
   by Fadi Aloul, Igor Markov, and Karem Sakallah
@@ -45,7 +46,9 @@
 			  identified symmetries.
 			  [Read Note Below]
 
- * Shatter.pl           : Executes the above 3 routines and parses through
+  python                : Update the original CNF file accordingly
+
+ * Shatter.pl           : Executes the above 4 routines and parses through
 			  the necessary input/output files.  
 
   
@@ -151,15 +154,5 @@
   - Get the latest version of Shatter from:
     http://www.eecs.umich.edu/~faloul
 
-
-  Feedback:    
-  ---------    
-  - Please email me if you have any comments or ideas on how to improve it
-  - Send bug reports to faloul@eecs.umich.edu                  
-
-
-  Copyrights:
-  -----------
-  - Please read attached copyrights form.
 
 
