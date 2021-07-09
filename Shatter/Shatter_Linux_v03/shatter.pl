@@ -37,7 +37,7 @@
 $cnf2gap = "cnf2gap";
 $gat = "saucy"; # Graph Automorphism Tool
 $gap2cnf = "gap2cnf";
-
+$python = "python3 sbc_parser.py";
 
 #
 # 0) Define Arguments
@@ -85,5 +85,14 @@ print "Adding Symmetry-breaking clauses to CNF instance ...\n";
 
 $cmd = "$gap2cnf -f $file -t $file.txt\n";
 #print "$cmd\n";
+system("$cmd");
+
+
+#
+# 5) Update the file with new clauses
+#
+
+print "Updating the CNF file...\n";
+$cmd = "$python $file.txt $file";
 system("$cmd");
 
