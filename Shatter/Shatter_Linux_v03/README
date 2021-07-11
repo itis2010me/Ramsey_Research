@@ -46,7 +46,7 @@
 			  identified symmetries.
 			  [Read Note Below]
 
-  python                : Update the original CNF file accordingly
+   python               : Update the original CNF file accordingly
 
  * Shatter.pl           : Executes the above 4 routines and parses through
 			  the necessary input/output files.  
