@@ -3,6 +3,12 @@ Repo for all the files during SS2021 research project on Ramsey Theory and SAT s
 
 # Note
 
+The script will use the following modules:
+
+- Maple
+- SCIP - for finding integer solutions much faster.
+- Perl
+
 The following SAT solvers I want to give credit to:
 
 - satch: https://github.com/arminbiere/satch
