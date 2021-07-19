@@ -13,6 +13,12 @@ ANS=-1
 k=$1 # colorings
 A=$2 # system of equation
 
+clean_up () {
+    rm -f *.cnf
+    rm -f *.cnf.txt
+}
+
+
 if [ "$#" -lt 2 ]; then
     echo "Usage: ./process.sh k A -lb=x -up=y"
     echo "k      ->  number of colors"
@@ -43,9 +49,8 @@ do
     esac
 done
 
-n=$LOWER_BOUND
 
-echo "----------- [ Start ] ----------"
+echo "----------- [ Start ] -----------"
 
 # RUN Shatter and/or SAT solver
 cd ./Rado_CNFs
@@ -53,10 +58,8 @@ cd ./Rado_CNFs
 
 echo "Running solver..."
 
-# ./mapleSCIP.sh 500 3 [2,-2,-7]
 
-
-# check upper bound
+# checking bounds bound
 echo "Checking upper bound..."
 ./mapleSCIP.sh $UPPER_BOUND $k $A >> log.txt
 FILE=$(find . -name "*.cnf")
@@ -67,12 +70,25 @@ if [[ $SAT_TEST -eq 0 ]]
 then # satisfiable
     echo "Upper bound too low."
     echo "Rado number for $A with $k-coloring is > $UPPER_BOUND."
+    # clean up
+    clean_up
     exit 0
 fi
 
-# clean up
-rm -f *.cnf
-rm -f *.cnf.txt
+echo "Checking lower bound..."
+./mapleSCIP.sh $LOWER_BOUND $k $A >> log.txt
+FILE=$(find . -name "*n$LOWER_BOUND.cnf")
+./satch -q $FILE > $FILE.txt
+SAT_TEST=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
+
+if [[ $SAT_TEST -eq 1 ]]
+then # unsatisfiable
+    echo "Lower bound too High."
+    echo "Rado number for $A with $k-coloring is <= $LOWER_BOUND."
+    # clean up
+    clean_up
+    exit 0
+fi
 
 
 # Searching
@@ -84,7 +100,7 @@ do
     echo $MID
     # Checking satisfiable or not
     ./mapleSCIP.sh $MID $k $A >> log.txt
-    FILE=$(find . -name "*.cnf")
+    FILE=$(find . -name "*n$MID.cnf")
     ./satch -q $FILE > $FILE.txt
     SAT=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
 
@@ -95,11 +111,9 @@ do
         ANS=$MID
         UPPER_BOUND=$(($MID-1))
     fi
-
-    # clean up
-    rm -f *.cnf
-    rm -f *.cnf.txt
 done
+
+clean_up
 
 if [[ $ANS -eq -1 ]]
 then # satisfiable
@@ -109,32 +123,6 @@ fi
 
 echo "" > log.txt
 echo "----------- [ Results ] ----------"
-echo "Rado number for $A with $k-coloring is = $ANS."
+echo "Rado number for $A with $k-coloring is $ANS."
 echo "----------- [ Done ] -------------"
 exit 0
-
-
-# for FILE in *.cnf
-# do
-
-#     if [[ $QUIET -eq 0 ]]
-#     then
-#         echo "---- [ $FILE ] -------------------"
-#         ./SAT $FILE
-#         ./SAT $FILE > ../$2/$FILE.txt
-#         echo ""
-#     else
-#         ./SAT -q $FILE > ../$2/$FILE.txt
-#     fi
-# done
-
-# for FILE in *.cnf
-# do
-#     SAT=$(grep -c 'UNSATISFIABLE' ../$2/$FILE.txt)
-#     if [[ $SAT -eq 0 ]]
-#     then
-#         echo "$FILE is satisfiable"
-#     else
-#         echo "$FILE is unsatisfiable"
-#     fi
-# done
