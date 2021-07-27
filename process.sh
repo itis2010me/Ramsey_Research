@@ -14,6 +14,7 @@ k=$1 # colorings
 A=$2 # system of equation
 
 clean_up () {
+    echo "" > log.txt
     rm -f *.cnf
     rm -f *.cnf.txt
 }
@@ -121,7 +122,7 @@ then # satisfiable
     exit 0
 fi
 
-echo "" > log.txt
+
 echo "----------- [ Results ] ----------"
 echo "Rado number for $A with $k-coloring is $ANS."
 echo "----------- [ Done ] -------------"
