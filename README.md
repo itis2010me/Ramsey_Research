@@ -8,6 +8,7 @@ The script will use the following modules:
 - Maple
 - SCIP - for finding integer solutions much faster.
 - Perl
+- Python 3
 
 The following SAT solvers I want to give credit to:
 
