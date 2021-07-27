@@ -1,0 +1,421 @@
+\documentclass{beamer}
+\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+
+\usetheme{default}
+
+\title{Rado's Theorem}
+\date{\today}
+\author{Jack, Chang}
+\usepackage{amsmath}
+\usepackage{amsfonts} % Fonts like \mathbb and \mathcal
+\usepackage{amssymb}
+\usepackage{hyperref} % for hyperlinks
+\usepackage{amsthm}
+\usepackage{diagbox}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newcommand{\R}{\mathbb R} %REALS
+\newcommand{\C}{\mathbb C} %COMPLEX
+\newcommand{\N}{\mathbb N} %NATURAL NUMBERS
+\newcommand{\Q}{\mathbb Q} %RATIONALS
+\newcommand{\Z}{\mathbb Z} %INTEGERS
+\newcommand{\V}{\mathbb V} 
+
+
+
+\begin{document}
+
+\begin{frame}[plain]
+    \maketitle
+\end{frame}
+
+% Brief introduction
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item Schur's theorem and Schur numbers. 
+        \pause
+        \item Schur's theorem was taken further by his Ph.D student Richard Rado.
+        \pause
+        \item In 1930, Rado determined that linear equations in the form of $\sum^k_{i=1}c_ix_i=0$ are guaranteed to have monochromatic solutions under any finite coloring of $\Z^+$.
+    \end{itemize}
+\end{frame}
+
+
+% Preliminaries
+\begin{frame}{Definitions}
+    \begin{definition}[Coloring]
+        An $r-$coloring of a set $S$ is a function $\chi : S \to C$, where $|C| = r$.
+    \end{definition}
+    \pause
+    \begin{definition}[Monochromatic]
+        A coloring $\chi$ is monochromatic on a set $S$ if $\chi$ is constant on $S$.
+    \end{definition}
+    
+    \pause
+    \begin{example}
+    	Let $\chi : [1,6] \to \{0,1\}$ be defined as $\chi(a)=0$ if $a$ is odd and $\chi(a)=1$ if $a$ is even. Then we have a 2-coloring of $[1,6]$ which is monochromatic on the sets $\{1,3,5\}$ and  $\{2,4,6\}$.
+    \end{example}
+    
+    % showing example of coloring and monochromatic sets
+\end{frame}
+
+\begin{frame}{Definitions cont'd}
+    \begin{definition}[Regularity]
+        For $r\geq 1$, a linear equation $D$ is called $r-$regular if there exists $n=n(D;r)$ such that for every $r-$coloring of $[1,n]$ there is a monochromatic solution to $D$. The equation $D$ is \textit{regular} if it is $r-$regular for all $r \geq 1$.
+    \end{definition}
+    \pause
+    \begin{definition}[Rado Number]
+        %The Rado Number of an equation $D$ is a theoretical quantity associated to $D$.
+        For any equation $D$, the Rado Number $R_r(D)$ is the smallest $N$ such that any $r$ coloring $\chi : \{1,2,\dots,N\} \to \{1,2,\dots, r\}$ must induce a monochromatic solution to $D$. 
+    \end{definition}
+\end{frame}
+
+
+
+% Rado's theorems
+\begin{frame}{Rado's Theorem}
+    \begin{Theorem}
+            Let $k \geq 3$ and $c_i \in \Z^+-\{0\}$ for $i = 1,2,\dots, k$. Let $D$ represent the equation $\sum^k_{i=1}c_ix_i=0$. If there exist some $i,j \in \{1,2,\dots,k\}$ such that $c_i < 0$ and $c_j > 0$, then $D$ is 2-regular. 
+    \end{Theorem}
+\end{frame}
+
+% Proof
+\begin{frame}[t]{Proof}
+    \begin{block}{Proof}
+     $D \to \sum^m_{i=1}\alpha_iy_i = \sum^n_{i=1}\beta_iz_i$, where $m \geq 2, n \geq 1,$. \\
+    \pause
+    We consider a subset of the solution to $D$, where $y=y_1=y_2=\cdots=y_{m-1}, w=y_m$, and $z=z_1=z_2=\cdots=z_n$. \\
+    $a=\sum^{m-1}_{i=1}\alpha_i, b=a_m, c=\sum^{n}_{i=1}\beta_i$. \\
+    \pause
+    The equation $D$ now can be rewritten as $ay+bw=cz$.\\
+    \pause
+    For each of the solutions $(y,w,z)$, determine the max$(y,w,z)$.\\
+    \pause
+    Let $(\bar{y}, \bar{w}, \bar{z})=$min$_{\forall (y,w,z)}$ max$(y,w,z)$. \\
+    \pause
+    $A=$ max$(\bar{y}, \bar{w}, \bar{z})$. \\
+    Note that $[1,\dots, A]$ contains a solution to $D$.
+    
+    \end{block}
+\end{frame}
+
+% proof cont'd
+\begin{frame}[t]{Proof Cont'd}
+    \begin{block}{Proof}
+        There exists a 2-coloring of $\Z^+$ with no monochromatic solution to $D$. \\
+        \pause
+        Let $l = $lcm$(\frac{a}{gcd(a,b)}, \frac{c}{gcd(b,c)})$ so that $\frac{bl}{a}, \frac{bl}{c} \in \Z^+$. \\
+        \pause
+        Let $s$ be the smallest element in $\{i\cdot l:i=2,\dots, A\}$ that is blue. \\
+        $s$ must exist since $\{i\cdot n:i=1,2,\dots,A\}$ is \textit{not} monochromatic for any $n\in \Z^+$. \\
+        \pause
+        Now, let $p\in \Z^+$, we have $t=\frac{b}{a}(s-l)p$ is blue. \\
+        \pause
+        Now, $q=\frac{b}{c}((s-l)p+s)$ must be red, otherwise $(t,s,q)$ would be a solution to $D$ and it is monochromatic(blue).
+    \end{block}
+\end{frame}
+
+% proof cont'd
+\begin{frame}[t]{Proof Cont'd}
+    \begin{block}{Proof}
+        To see this, let's plug $(t,s,q)$ into $D$.
+        $$ay+bw=cz$$
+        $$a(\frac{b}{a}(s-l)p) + bs = c(\frac{b}{c}((s-l)p+s))$$
+        $$bsp - blp + bs = bsp - blp + bs$$
+        \pause
+        Since we know that both $l,q$ are red, $\frac{b}{a}(s-l)(p+1)$ must be blue, for otherwise $(\frac{b}{a}(s-l)(p+1), l,q)$ is another monochromatic(red) solution.
+        \pause
+        $$a(\frac{b}{a}(s-l)(p+1)) + bl = c(\frac{b}{c}((s-l)p+s))$$
+        $$bsp - blp + bs - bl + bl = bsp - blp + bs$$
+    \end{block}
+\end{frame}
+
+\begin{frame}{Proof Cont'd}
+    \begin{proof}
+        From before, we know that $t=\frac{b}{a}(s-l)p$ and $\frac{b}{a}(s-l)(p+1)$ are both blue. \\
+		\pause        
+        Since $p$ was chosen randomly in $\Z^+$, we can see that $\{i\cdot \frac{b}{a}(s-l):i=p,p+1,\dots\}$ is monochromatic. In particular, we arrive at the following: 
+        $$\{i\cdot \frac{b}{a}(s-l):i=1,2,\dots,A\}$$
+        is monochromatic, which contradicts our assumption. 
+    \end{proof}
+\end{frame}
+
+% Other theorems
+\begin{frame}{Rado's Theorems}
+    \begin{itemize}
+        \item It is known that $x+2y-4z=0$ is not $3-$regular. 
+        \pause
+    \end{itemize}
+    \begin{Theorem}[Rado's Single Equation Theorem]
+        Let $k\geq 2$, Let $c_i\in \Z \setminus \{0\}$, for all $i \in \{1,2,\dots, k\}$, be constants. Then 
+        $$\sum^k_{i=1}c_ix_i=0$$
+        is regular if and only if there exists a nonempty subset $C_s \subset \{c_i:1 \leq i \leq k\}$ such that $\sum_{d\in C_s}d=0$.  
+    \end{Theorem}
+\end{frame}
+
+\begin{frame}{Rado's Theorem}
+    \begin{itemize}
+        \item In Rado's original paper, he conjectured that for all $r\in \Z^+$, there must exist equations that are $r-$regular but not $(r+1)-$regular. 
+        \pause
+        \item This conjecture has been resolved with a recent paper with the following theorem:
+    \end{itemize}
+    \begin{Theorem}[Alexeev, Tsimerman '10]
+        For every $r\in \Z^+$, the equation
+        $$\sum^r_{i=1}\frac{2^i}{2^i-1}x_i = (\sum^r_{i=1}\frac{2^i}{2^i-1}-1)x_r+1$$
+        is $r-$regular but not $(r+1)-$regular. 
+    \end{Theorem}
+\end{frame}
+
+% Another Rado's theorem
+\begin{frame}[t]{Another View to Rado's Theorem}
+    \begin{definition}
+        Let $A$ be an $m\times n$ matrix with rational entries. $A$ is partition regular(PR) if whenever $\N$ is finitely colored, there exists a monochromatic solution $x\in \N^n$ where $Ax=0$.
+    \end{definition}
+    \pause
+    \begin{example}
+        $A = [1, 1, -1]$ is partition regular. Let $x=[a,b,c]$
+        \[
+        \begin{bmatrix} 1 & 1 & -1 \end{bmatrix}
+        \begin{bmatrix} a \\ b \\ c  \end{bmatrix} 
+        = a+b-c=0.
+        \]
+        By Schur's theorem, there will exist a solution $x$ that is monochromatic, thus $A$ is PR.
+    \end{example}
+\end{frame}
+
+% Small lemma
+\begin{frame}{Another View to Rado's Theorem}
+    \begin{lemma}
+        $A$ is PR if and only if $\lambda A$ is PR for all $\lambda \in \Q \setminus \{0\}$.
+    \end{lemma}
+    \pause
+    \begin{proof}
+        It is easy to see that assume $A$ is PR, then there will exists a monochromatic solution $x \in \N^n$ such that $Ax=0$. The associative law implies that $(\lambda A)x = \lambda(Ax) = 0$. Thus, $\lambda A$ is PR. The other direction can be proven simply replacing multiplication with division. 
+    \end{proof}
+    \pause
+    \begin{itemize}
+        \item $R_r(A) = R_r(\lambda A), \lambda \in \Q \setminus \{0\}$.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Blank}
+
+\end{frame}
+
+
+
+
+%%%Jack's slides
+\begin{frame}{Rado numbers $R_3(a(x-y) = bz)$}
+ 
+\begin{center}
+\begin{tabular}{c|cccccccc}
+	\diagbox{$b$}{$a$} & 1 & 2 & 3 & 4 &5&6&7&8\\
+	\hline
+	1 & 14 & 14 & 27 & 64 &125 &216 & 343 & 512\\
+	2 & 43 & \textit{14} & 31 & \textit{14} &125 &\textit{27} &343&\textit{64} \\
+	3 & 94 & 61 & \textit{14} & 73 &125&\textit{14}&343&512\\
+	4 & 173 & \textit{43} & 109 & \textit{14} &141&\textit{31}&343&\textit{14} \\
+	5 & 286 & 181 & 186 & 180 &\textit{14} &241 & 343 & 512\\
+	6 & 439 & \textit{94} & \textit{43}  & \textit{61} &300&\textit{14}& 379 &\textit{73}\\
+	7 & 638 & 428 & 442 & 456 &470&462 &\textit{14}&561\\
+	8 & 889 & \textit{173} & 633 & \textit{43}&665&\textit{109}& 644 &\textit{14}\\
+	9 & 1198 & 856 & \textit{94}& 892 & 910 & \textit{61} & 896 & 896\\
+	10 & 1571 & \textit{286} & 1171 & \textit{181} &\textit{43}& \textit{186} & 1190 &\textit{180}
+\end{tabular}
+\end{center}
+Italicized numbers denote equations that are multiples of an equation whose Rado number is already computed.
+\end{frame}
+
+\begin{frame}{Conjecture 1}
+\begin{center}
+	\begin{tabular}{c|cccccccc}
+		\diagbox{$b$}{$a$} & 1 & 2 & 3 & 4 &5&6&7&8\\
+		\hline
+		1 & {\color{red}{14}} & 14 & 27 & 64 &125 &216 & 343 & 512\\
+		2 & {\color{red}{43}} & \textit{14} & 31 & \textit{14} &125 &\textit{27} &343&\textit{64} \\
+		3 & {\color{red}{94}} & 61 & \textit{14} & 73 &125&\textit{14}&343&512\\
+		4 & {\color{red}{173}} & \textit{43} & 109 & \textit{14} &141&\textit{31}&343&\textit{14} \\
+		5 & {\color{red}{286}} & 181 & 186 & 180 &\textit{14} &241 & 343 & 512\\
+		6 & {\color{red}{439}} & \textit{94} & \textit{43}  & \textit{61} &300&\textit{14}& 379 &\textit{73}\\
+		7 & {\color{red}{638}} & 428 & 442 & 456 &470&462 &\textit{14}&561\\
+		8 & {\color{red}{889}} & \textit{173} & 633 & \textit{43}&665&\textit{109}& 644 &\textit{14}\\
+		9 & {\color{red}{1198}} & 856 & \textit{94}& 892 & 910 & \textit{61} & 896 & 896\\
+		10 & {\color{red}{1571}} & \textit{286} & 1171 & \textit{181} &\textit{43}& \textit{186} & 1190 &\textit{180}
+	\end{tabular}
+\end{center}
+\begin{conjecture}[Myers '15]
+	$R_3(x-y = bz) = (b+2)^3 - (b+2)^2 - (b+2) - 1$
+\end{conjecture}
+\end{frame}
+
+\begin{frame}{Generalized Schur numbers}
+\begin{definition}
+	The \emph{generalized Schur number} $S(k,m)$ is the Rado number $$R_k(x_1+x_2+\dots+x_{m-1} = x_m).$$ 
+	\end{definition}
+\begin{conjecture}
+	$S(k,m) = m^3-m^2-m-1.$
+\end{conjecture}
+\pause 
+\begin{itemize}
+\item The equation $x-y = (m-2)z$ is equivalent to $x_1 + (m-2)x_{m-1} = x_m$
+\pause \item Setting $x_2 = x_3 = \dots = x_{m-1}$ shows that $S(3,m) \le R_k(x_1 + (m-2)x_{m-1} = x_m)$
+\pause \item Myers's conjecture implies the conjecture for generalized Schur numbers 
+\end{itemize}
+
+\end{frame}
+\begin{frame}{Conjecture 2}
+\begin{center}
+\begin{tabular}{c|cccccccc}
+	\diagbox{$b$}{$a$} & 1 & 2 & 3 & 4 &5&6&7&8\\
+	\hline
+	1 & 14 & 14 & {\color{red}27} & {\color{red}64} &{\color{red}125} &{\color{red}216} & {\color{red}343} & {\color{red}512}\\
+	2 & 43 & \textit{14} & 31 & \textit{14} &{\color{red}125} &\textit{27} &{\color{red}343}&\textit{64} \\
+	3 & 94 & 61 & \textit{14} & 73 &{\color{red}125}&\textit{14}&{\color{red}343}&{\color{red}512}\\
+	4 & 173 & \textit{43} & 109 & \textit{14} &141&\textit{31}&{\color{red}343}&\textit{14} \\
+	5 & 286 & 181 & 186 & 180 &\textit{14} &241 & {\color{red}343} & {\color{red}512}\\
+	6 & 439 & \textit{94} & \textit{43}  & \textit{61} &300&\textit{14}& 379 &\textit{73}\\
+	7 & 638 & 428 & 442 & 456 &470&462 &\textit{14}&561\\
+	8 & 889 & \textit{173} & 633 & \textit{43}&665&\textit{109}& 644 &\textit{14}\\
+	9 & 1198 & 856 & \textit{94}& 892 & 910 & \textit{61} & 896 & 896\\
+	10 & 1571 & \textit{286} & 1171 & \textit{181} &\textit{43}& \textit{186} & 1190 &\textit{180}
+\end{tabular} 
+\end{center}
+
+\begin{conjecture}
+	If $\gcd(a,b) = 1$ and $a\ge b+2$, then $R_3(a(x-y)=bz) = a^3$. 
+\end{conjecture}
+\end{frame}
+
+\begin{frame}{Conjecture 2}
+\begin{theorem}[Landman, Robertson '03]
+	$R_2(a(x-y) = bz) = a^2$ if $\gcd(a,b) = 1$ and $a\ge b+1$. 
+\end{theorem}
+
+\pause
+\begin{theorem}[CW]
+	If $\gcd(a,b) = 1$, then $R_k(a(x-y) = bz) \ge a^k$ for all $k$. 
+\end{theorem}
+\pause
+\begin{proof}
+	The $a-$adic valuation $\nu_a: [a^k-1] \to \{0,1,\dots,k-1\}$ gives a valid coloring of $[a^k-1]$. 
+\end{proof}
+\begin{example}
+	$a = 3, b = 1$:
+	\begin{align*}
+	&{\color{red} 1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26} \\
+&	{\color{blue} 3,6,12,15,21,24} \\
+	&{\color{green} 9,18} \\ 
+	\end{align*}
+\end{example}
+\end{frame}
+
+\begin{frame}{Conjecture 2}
+\begin{itemize}
+\item Evidence of a stronger conjecture: $R_4(4(x-y) = z) = 256 = 4^4$ and $R_4(5(x-y) = z) = 625 = 5^4$. 
+\item \pause Proving the upper bound is more challenging. 
+\item \pause Not obvious how to generalize the Landman/Robertson proof for $k = 2$ case
+
+\pause \begin{lemma}[CW] 
+Any 3-coloring $\chi$ of $[a^3]$ that avoids monochromatic solutions to $a(x-y) = z$ must satisfy $\chi(a) \neq \chi(a^2)$ 
+\end{lemma}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conjecture 3}
+ 
+\begin{center}
+	\begin{tabular}{c|cccccccc}
+		\diagbox{$b$}{$a$} & 1 & 2 & 3 & 4 &5&6&7&8\\
+		\hline
+		1 & 14 & 14 & 27 & 64 &125 &216 & 343 & 512\\
+		2 & 43 & \textit{14} & {\color{red}31} & \textit{14} &125 &\textit{27} &343&\textit{64} \\
+		3 & 94 & 61 & \textit{14} & {\color{red}73} &125&\textit{14}&343&512\\
+		4 & 173 & \textit{43} & 109 & \textit{14} &{\color{red}141}&\textit{31}&343&\textit{14} \\
+		5 & 286 & 181 & 186 & 180 &\textit{14} &{\color{red}241} & 343 & 512\\
+		6 & 439 & \textit{94} & \textit{43}  & \textit{61} &300&\textit{14}& {\color{red}379} &\textit{73}\\
+		7 & 638 & 428 & 442 & 456 &470&462 &\textit{14}&{\color{red}561}\\
+		8 & 889 & \textit{173} & 633 & \textit{43}&665&\textit{109}& 644 &\textit{14}\\
+		9 & 1198 & 856 & \textit{94}& 892 & 910 & \textit{61} & 896 & 896\\
+		10 & 1571 & \textit{286} & 1171 & \textit{181} &\textit{43}& \textit{186} & 1190 &\textit{180}
+	\end{tabular}
+\end{center}
+\pause \begin{conjecture}
+	$R_3(a(x-y) = (a-1)z) = a^3+(a-1)^2$ for $a \ge 3$. 
+\end{conjecture}
+\end{frame}
+\begin{frame}{Conjecture 3}
+\begin{theorem}[CW]
+	$R_a(a(x-y) = (a-1)z) \ge a^3+(a-1)^2$ for $a\ge 3$.
+\end{theorem}
+\begin{proof}
+	The following coloring function works:
+	
+	$$\chi(i) = \begin{cases}
+	\text{red} & \text{if } \nu_a(i) = 1 \\
+	\text{blue} & \text{if } \nu_a(i) = 2 \text{ or } (\nu_a(i) = 0 \text{ and } (i < a^2 - a \text{ or } i>a^3-a))\\
+	\text{green} & \text{otherwise.} 
+	\end{cases}$$
+\end{proof}
+\end{frame}
+\begin{frame}{Conjecture 3}
+\begin{example}
+	The following coloring avoids monochromatic solutions to $3(x-y) = 2z$: 
+	\vspace{15pt}
+	
+\small{	{\color{blue} 1,2},{\color{red}3},{\color{blue} 4,5},{\color{red}6},{\color{green} 7,8},{\color{blue} 9},{\color{green} 10,11},{\color{red}12},{\color{green} 13,14},{\color{red}15},{\color{green} 16,17},{\color{blue} 18},{\color{green} 19,20},{\color{red}21},{\color{green} 22,23},{\color{red}24},{\color{blue} 25,26},{\color{green}27},{\color{blue}28,29},{\color{red}30}}
+
+
+\end{example}
+\end{frame}
+
+\begin{frame}{Regularity of $ax+by+cz = 0$}
+\begin{itemize}
+\item We know from Rado's theorem that if some nonempty subset of $\{a,b,c\}$ sums to 0, then the equation $\mathcal{E}_{a,b,c} := (ax+by+cz = 0)$ is regular. 
+
+\item \pause But we can still compute the numbers $R_k(\mathcal{E}_{a,b,c})$ if $\mathcal{E}_{a,b,c}$ is $k-$regular. 
+
+\pause 
+\begin{definition}The {\color{blue}{degree of regularity} ($dor$)} of $\mathcal{E}_{a,b,c}$ is the largest number $k$ such that $\mathcal{E}_{a,b,c}$ is $k-$regular but not $(k+1)-$regular.
+\end{definition}
+\end{itemize}
+
+\pause
+\begin{problem}
+	Determine $dor(\mathcal{E}_{a,b,c})$ for all $a,b,c$. 
+\end{problem}
+\end{frame}
+
+\begin{frame}{Regularity of $ax+by+cz = 0$}
+\begin{theorem}[Rado]
+	If $a/b \neq 2^k$, then $dor(a(x+y) = bz) \le 3$. 
+\end{theorem}
+
+\begin{itemize}
+	\item \pause Computing $R_3(a(x+y) = bz)$ shows that $dor(\mathcal{E}_{a,a,-b}) = 3$. 
+\end{itemize}
+\pause 
+Table of Rado numbers $R_3(a(x+y) = bz)$
+\begin{center}
+	\begin{tabular}{c|cccc}
+		\diagbox{$b$}{$a$} & 1 &2 &3&4 \\
+		\hline
+		1 & 14 & $>600$ & $>600$ &$>600$ \\
+		2& 1  &\textit{14} & 243 &$>$\textit{600}\\
+		3& 54 & 54 &\textit{14} & 384 \\
+		4& $>600$  & \textit{1} & 108 & \textit{14} \\ 
+	\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}{Goals}
+\begin{itemize}
+	\item Continue computing $dor(\mathcal{E}_{a,b,c})$
+	\item \pause Prove upper bounds for the three conjectures
+	\item \pause Do more computation/experimentation with different families of 3-color Rado numbers 
+	\item \pause Extend results/experiments to 4 colors 
+\end{itemize}
+\end{frame}
+\end{document}
