@@ -10,6 +10,11 @@ The script will use the following modules:
 - Perl
 - Python 3
 
+The C++ Rado generator served as an improvement from Maple.
+
+- Use SCIP to find all solutions to Ax=b
+- Linear read/write to files(areas of improvement)
+
 The following SAT solvers I want to give credit to:
 
 - satch: https://github.com/arminbiere/satch
