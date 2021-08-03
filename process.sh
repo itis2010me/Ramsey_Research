@@ -8,15 +8,17 @@ SAT_TEST=0
 SOLVER="satch"
 LOWER_BOUND=0
 UPPER_BOUND=0
+UPPER_CNF=""
 MID=0
 ANS=-1
 k=$1 # colorings
 A=$2 # system of equation
 
 clean_up () {
-    echo "" > log.txt
     rm -f *.cnf
     rm -f *.cnf.txt
+    make clean >> log.txt
+    echo "" > log.txt
 }
 
 
@@ -55,7 +57,8 @@ echo "----------- [ Start ] -----------"
 
 # RUN Shatter and/or SAT solver
 cd ./Rado_CNFs
-
+# make clean >> log.txt
+make >> log.txt
 
 echo "Running solver..."
 
@@ -78,6 +81,8 @@ fi
 
 echo "Checking lower bound..."
 ./mapleSCIP.sh $LOWER_BOUND $k $A >> log.txt
+# echo $UPPER_CNF
+# maple -i radoCNFgenerators1.mpl -c "extractRadoSubformula($UPPER_CNF,$LOWER_BOUND,3,3):" -c "quit;" >> log.txt
 FILE=$(find . -name "*n$LOWER_BOUND.cnf")
 ./satch -q $FILE > $FILE.txt
 SAT_TEST=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
@@ -121,7 +126,6 @@ then # satisfiable
     echo "Cannot find Rado number."
     exit 0
 fi
-
 
 echo "----------- [ Results ] ----------"
 echo "Rado number for $A with $k-coloring is $ANS."
