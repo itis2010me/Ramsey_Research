@@ -67,6 +67,7 @@ echo "Running solver..."
 echo "Checking upper bound..."
 ./mapleSCIP.sh $UPPER_BOUND $k $A >> log.txt
 FILE=$(find . -name "*.cnf")
+UPPER_CNF=${FILE:2}
 ./satch -q $FILE > $FILE.txt
 SAT_TEST=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
 
@@ -79,11 +80,12 @@ then # satisfiable
     exit 0
 fi
 
+
 echo "Checking lower bound..."
-./mapleSCIP.sh $LOWER_BOUND $k $A >> log.txt
-# echo $UPPER_CNF
-# maple -i radoCNFgenerators1.mpl -c "extractRadoSubformula($UPPER_CNF,$LOWER_BOUND,3,3):" -c "quit;" >> log.txt
+
+python3 ./Rado_sub_py.py $k $LOWER_BOUND $UPPER_CNF
 FILE=$(find . -name "*n$LOWER_BOUND.cnf")
+
 ./satch -q $FILE > $FILE.txt
 SAT_TEST=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
 
@@ -105,8 +107,11 @@ do
     MID=$((($LOWER_BOUND+$UPPER_BOUND)/2))
     echo $MID
     # Checking satisfiable or not
-    ./mapleSCIP.sh $MID $k $A >> log.txt
+
+
+    python3 ./Rado_sub_py.py $k $MID $UPPER_CNF
     FILE=$(find . -name "*n$MID.cnf")
+
     ./satch -q $FILE > $FILE.txt
     SAT=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
 
@@ -116,6 +121,7 @@ do
     else # unsatisfibale
         ANS=$MID
         UPPER_BOUND=$(($MID-1))
+        UPPER_CNF=${FILE:2}
     fi
 done
 
