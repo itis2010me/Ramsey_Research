@@ -11,6 +11,26 @@ The use of Boolean algebra, particularly SAT, will be extensive. Each system of 
 
 Details comming soon...
 
+
+
+# Code Optimization
+
+The computation can be broken down into two steps:
+
+- Generating the encoded problem in CNF(Dimacs) format.
+- Feed the result `.cnf` file into SAT solver.
+  - There might be some symmetry breaking processes in the middle.
+
+Orignal CNF generation was done in Maple. Another implementation later was done in C++ in order to achieve better speed.
+
+- C++ implementation includes some optimzation techniques including: loop unrolling, multithreading.
+
+Due to the sheer large number of write operations to a file(millions of lines), python was chosen in the end to generate CNF files.
+
+Speed improvement for example of instance with `n=1500` is from 25mins(Maple) -> 5mins(C++) -> 1min(python).
+
+Next step, during the generation, generating all the possible solution for a linear equation with SCIP takes a significant amount of time. We are looking for linear algebra theorems to improve this part. Details coming soon...
+
 # Note
 
 The script will use the following modules:
@@ -36,3 +56,8 @@ Script that I modified:
 - Shatter's perl script
 - Use in conjunction with symmetry breaking clause parser python script
 
+# Version 
+
+Project stated June 26, 2021
+
+Last updated on Augest 11, 2021
