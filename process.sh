@@ -13,21 +13,33 @@ MID=0
 ANS=-1
 k=$1 # colorings
 A=$2 # system of equation
+STARTTIME=$(date +%s)
 
 clean_up () {
     rm -f *.cnf
     rm -f *.cnf.txt
     make clean >> log.txt
-    echo "" > log.txt
+}
+
+usage () {
+cat << EOF
+usage: ./process.sh k A -lb=x -up=y
+
+k      Number of colors
+A      Linear equation in 1 x n matrix form
+-lb    Lower bound for the Rado number
+-up    Upper bound for the Rado number
+
+Input for k A and bounds are not checked for correctness.
+This process script will use binary search to search for the Rado number 
+of given settings.
+EOF
+  exit 0
 }
 
 
-if [ "$#" -lt 2 ]; then
-    echo "Usage: ./process.sh k A -lb=x -up=y"
-    echo "k      ->  number of colors"
-    echo "A      ->  system of equations"
-    echo "-lb/up ->  optional lower/upper bound"
-    exit 0
+if [ "$#" -lt 4 ]; then
+    usage
 fi
 
 # Parse CLAs
@@ -36,9 +48,6 @@ do
     case $arg in
     # -q|--quiet)
     # QUIET=1
-    # ;;
-    # -s|--shatter)
-    # SHATTER=1
     # ;;
     -sat=*)
     SOLVER="${arg#*=}"
@@ -54,11 +63,11 @@ done
 
 
 echo "----------- [ Start ] -----------"
+echo "" > log.txt
 
 # RUN Shatter and/or SAT solver
 cd ./Rado_CNFs
-# make clean >> log.txt
-make >> log.txt
+# make >> log.txt
 
 echo "Running solver..."
 
@@ -66,7 +75,7 @@ echo "Running solver..."
 # checking bounds bound
 echo "Checking upper bound..."
 ./mapleSCIP.sh $UPPER_BOUND $k $A >> log.txt
-FILE=$(find . -name "*.cnf")
+FILE=$(find . -name "*n$UPPER_BOUND.cnf")
 UPPER_CNF=${FILE:2}
 ./satch -q $FILE > $FILE.txt
 SAT_TEST=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
@@ -77,6 +86,9 @@ then # satisfiable
     echo "Rado number for $A with $k-coloring is > $UPPER_BOUND."
     # clean up
     clean_up
+    echo "----------- [ Done ] -------------"
+    ENDTIME=$(date +%s)
+    echo "Time taken: $(($ENDTIME - $STARTTIME)) seconds."
     exit 0
 fi
 
@@ -95,6 +107,9 @@ then # unsatisfiable
     echo "Rado number for $A with $k-coloring is <= $LOWER_BOUND."
     # clean up
     clean_up
+    echo "----------- [ Done ] -------------"
+    ENDTIME=$(date +%s)
+    echo "Time taken: $(($ENDTIME - $STARTTIME)) seconds."
     exit 0
 fi
 
@@ -136,4 +151,6 @@ fi
 echo "----------- [ Results ] ----------"
 echo "Rado number for $A with $k-coloring is $ANS."
 echo "----------- [ Done ] -------------"
+ENDTIME=$(date +%s)
+echo "Time taken: $(($ENDTIME - $STARTTIME)) seconds."
 exit 0
