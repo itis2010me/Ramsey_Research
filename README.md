@@ -29,6 +29,11 @@ Due to the sheer large number of write operations to a file(millions of lines), 
 
 Speed improvement for example of instance with `n=1500` is from 25mins(Maple) -> 5mins(C++) -> 1min(python).
 
+Added symmetry breaking clauses according to M.Heule's encoding. 
+
+- Symmetry breaking currently only works with linear equation with 3 variables only! 
+- Performance increase is not apparent when coloring smaller instances of the integers. 
+
 Next step, during the generation, generating all the possible solution for a linear equation with SCIP takes a significant amount of time. We are looking for linear algebra theorems to improve this part. Details coming soon...
 
 # Note
@@ -60,4 +65,4 @@ Script that I modified:
 
 Project stated June 26, 2021
 
-Last updated on Augest 11, 2021
+Last updated on Augest 13, 2021
