@@ -6,13 +6,14 @@ SHATTER=0
 SAT=0
 SAT_TEST=0
 SOLVER="satch"
-LOWER_BOUND=0
-UPPER_BOUND=0
+LOWER_BOUND=$3
+UPPER_BOUND=$4
 UPPER_CNF=""
 MID=0
 ANS=-1
 k=$1 # colorings
 A=$2 # system of equation
+sym_f=$5
 STARTTIME=$(date +%s)
 
 clean_up () {
@@ -23,12 +24,13 @@ clean_up () {
 
 usage () {
 cat << EOF
-usage: ./process.sh k A -lb=x -up=y
+usage: ./process.sh k A lb up sym_f
 
 k      Number of colors
 A      Linear equation in 1 x n matrix form
--lb    Lower bound for the Rado number
--up    Upper bound for the Rado number
+lb     Lower bound for the Rado number
+up     Upper bound for the Rado number
+sym_f  Symmetry breaking flag, 0 -> turn off
 
 Input for k A and bounds are not checked for correctness.
 This process script will use binary search to search for the Rado number 
@@ -38,43 +40,42 @@ EOF
 }
 
 
-if [ "$#" -lt 4 ]; then
+if [ "$#" -lt 5 ]; then
     usage
 fi
 
-# Parse CLAs
-for arg in "$@"
-do
-    case $arg in
-    # -q|--quiet)
-    # QUIET=1
-    # ;;
-    -sat=*)
-    SOLVER="${arg#*=}"
-    ;;
-    -lb=*)
-    LOWER_BOUND=${arg#*=}
-    ;;
-    -up=*)
-    UPPER_BOUND=${arg#*=}
-    ;;
-    esac
-done
+# # Parse CLAs
+# for arg in "$@"
+# do
+#     case $arg in
+#     # -q|--quiet)
+#     # QUIET=1
+#     # ;;
+#     -sat=*)
+#     SOLVER="${arg#*=}"
+#     ;;
+#     -lb=*)
+#     LOWER_BOUND=${arg#*=}
+#     ;;
+#     -up=*)
+#     UPPER_BOUND=${arg#*=}
+#     ;;
+#     esac
+# done
 
 
 echo "----------- [ Start ] -----------"
-echo "" > log.txt
 
 # RUN Shatter and/or SAT solver
 cd ./Rado_CNFs
-# make >> log.txt
+echo "" > log.txt
 
 echo "Running solver..."
 
 
 # checking bounds bound
 echo "Checking upper bound..."
-./mapleSCIP.sh $UPPER_BOUND $k $A >> log.txt
+./mapleSCIP.sh $UPPER_BOUND $k $A $sym_f>> log.txt
 FILE=$(find . -name "*n$UPPER_BOUND.cnf")
 UPPER_CNF=${FILE:2}
 ./satch -q $FILE > $FILE.txt
