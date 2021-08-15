@@ -2,7 +2,8 @@
 
 # Defaults
 QUIET=0
-SHATTER=0
+QUIET_FLAG=""
+SAT_FLAG=""
 SAT=0
 SAT_TEST=0
 SOLVER="satch"
@@ -19,18 +20,20 @@ STARTTIME=$(date +%s)
 clean_up () {
     rm -f *.cnf
     rm -f *.cnf.txt
-    make clean >> log.txt
 }
 
 usage () {
 cat << EOF
 usage: ./process.sh k A lb up sym_f
 
-k      Number of colors
-A      Linear equation in 1 x n matrix form
-lb     Lower bound for the Rado number
-up     Upper bound for the Rado number
-sym_f  Symmetry breaking flag, 0 -> turn off
+k          Number of colors
+A          Linear equation in 1 x n matrix form
+lb         Lower bound for the Rado number
+up         Upper bound for the Rado number
+sym_f      Symmetry breaking flag, 0 -> turn off
+
+-sat=      Select a SAT solver to opearte. Default to satch
+-q|--quite Disable verbal response from SAT solver
 
 Input for k A and bounds are not checked for correctness.
 This process script will use binary search to search for the Rado number 
@@ -44,27 +47,40 @@ if [ "$#" -lt 5 ]; then
     usage
 fi
 
-# # Parse CLAs
-# for arg in "$@"
-# do
-#     case $arg in
-#     # -q|--quiet)
-#     # QUIET=1
-#     # ;;
-#     -sat=*)
-#     SOLVER="${arg#*=}"
-#     ;;
-#     -lb=*)
-#     LOWER_BOUND=${arg#*=}
-#     ;;
-#     -up=*)
-#     UPPER_BOUND=${arg#*=}
-#     ;;
-#     esac
-# done
+# Parse CLAs
+for arg in "$@"
+do
+    case $arg in
+    -q|--quiet)
+    QUIET=1
+    ;;
+    -sat=*)
+    SOLVER="${arg#*=}"
+    ;;
+    esac
+done
 
 
 echo "----------- [ Start ] -----------"
+
+# setting the quiet flag
+if [[ $QUIET -eq 1 ]]
+then 
+    if [[ $SOLVER == "satch" ]]
+    then
+        QUIET_FLAG="-q"
+    elif [[ $SOLVER == "glucose" ]]
+    then
+        QUIET_FLAG="-verb=0"
+    fi
+fi
+
+# set the glucose flag
+if [[ $SOLVER == "glucose" ]]
+then
+    SOLVER="glucose-syrup"
+    SAT_FLAG="-no-pre -asymm -nthreads=8"
+fi
 
 # RUN Shatter and/or SAT solver
 cd ./Rado_CNFs
@@ -75,10 +91,10 @@ echo "Running solver..."
 
 # checking bounds bound
 echo "Checking upper bound..."
-./mapleSCIP.sh $UPPER_BOUND $k $A $sym_f>> log.txt
+./mapleSCIP.sh $UPPER_BOUND $k $A $sym_f >> log.txt
 FILE=$(find . -name "*n$UPPER_BOUND.cnf")
 UPPER_CNF=${FILE:2}
-./satch -q $FILE > $FILE.txt
+./$SOLVER $QUIET_FLAG $SAT_FLAG $FILE > $FILE.txt
 SAT_TEST=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
 
 if [[ $SAT_TEST -eq 0 ]]
@@ -99,7 +115,7 @@ echo "Checking lower bound..."
 python3 ./Rado_sub_py.py $k $LOWER_BOUND $UPPER_CNF
 FILE=$(find . -name "*n$LOWER_BOUND.cnf")
 
-./satch -q $FILE > $FILE.txt
+./$SOLVER $QUIET_FLAG $SAT_FLAG $FILE > $FILE.txt
 SAT_TEST=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
 
 if [[ $SAT_TEST -eq 1 ]]
@@ -128,7 +144,7 @@ do
     python3 ./Rado_sub_py.py $k $MID $UPPER_CNF
     FILE=$(find . -name "*n$MID.cnf")
 
-    ./satch -q $FILE > $FILE.txt
+    ./$SOLVER $QUIET_FLAG $SAT_FLAG $FILE > $FILE.txt
     SAT=$(grep -c 'UNSATISFIABLE' ./$FILE.txt)
 
     if [[ $SAT -eq 0 ]]
