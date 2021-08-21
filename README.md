@@ -41,9 +41,12 @@ Next step, during the generation, generating all the possible solution for a lin
 The script will use the following modules:
 
 - Maple
+  - Symbolic manipulation, generate SCIP input files.
 - SCIP - for finding integer solutions much faster.
+  - Hermite Normal Form is the next step to optimize SCIP away.
 - Perl
 - Python 3
+  - Sympy and Numpy python libraries.
 
 The C++ Rado generator served as an improvement from Maple.
 
@@ -65,4 +68,4 @@ Script that I modified:
 
 Project stated June 26, 2021
 
-Last updated on Augest 13, 2021
+Last updated on Augest 20, 2021
