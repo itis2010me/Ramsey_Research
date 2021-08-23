@@ -34,7 +34,13 @@ Added symmetry breaking clauses according to M.Heule's encoding.
 - Symmetry breaking currently only works with linear equation with 3 variables only! 
 - Performance increase is not apparent when coloring smaller instances of the integers. 
 
-Next step, during the generation, generating all the possible solution for a linear equation with SCIP takes a significant amount of time. We are looking for linear algebra theorems to improve this part. Details coming soon...
+Next step, during the generation, generating all the possible solution for a linear equation with SCIP takes a significant amount of time. We are looking for linear algebra theorems to improve this part. 
+
+Aug 22
+
+Using Maple's `isolve` parametrization function, we can generate all possible solutions with python. 
+
+- The speedup is around 4.25x compare to using SCIP alone. 
 
 # Note
 
@@ -42,7 +48,7 @@ The script will use the following modules:
 
 - Maple
   - Symbolic manipulation, generate SCIP input files.
-- SCIP - for finding integer solutions much faster.
+- SCIP - for finding integer solutions much faster. (No longer in use)
   - Hermite Normal Form is the next step to optimize SCIP away.
 - Perl
 - Python 3
@@ -68,4 +74,4 @@ Script that I modified:
 
 Project stated June 26, 2021
 
-Last updated on Augest 20, 2021
+Last updated on Augest 22, 2021
