@@ -9,9 +9,6 @@ There are many conjectures about the theoretical quantity of Rado's number and t
 
 The use of Boolean algebra, particularly SAT, will be extensive. Each system of linear homogenous equation will be encoded into many clauses. Then, using SAT solvers, along with heavy optimization techniques both before and during the execution of the solver, solve the SAT problem in a reasonable time. 
 
-Details comming soon...
-
-
 
 # Code Optimization
 
@@ -56,7 +53,7 @@ The script will use the following modules:
 
 The C++ Rado generator served as an improvement from Maple.
 
-- Use SCIP to find all solutions to Ax=b
+- Use SCIP to find all solutions to Ax=b (obsolete) 
 - Linear read/write to files(areas of improvement)
 
 The following SAT solvers I want to give credit to:
@@ -72,6 +69,6 @@ Script that I modified:
 
 # Version 
 
-Project stated June 26, 2021
+Project started June 26, 2021
 
-Last updated on Augest 22, 2021
+Last updated on Augest 25, 2021
