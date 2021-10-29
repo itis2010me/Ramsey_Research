@@ -83,7 +83,7 @@ then
 fi
 
 # RUN Shatter and/or SAT solver
-cd ./Testing
+cd ./Code
 echo "" > log.txt
 
 echo "Running solver..."
