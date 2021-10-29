@@ -20,6 +20,7 @@ The use of Boolean algebra, particularly SAT, will be extensive. Each system of 
 - `./code` - The directory containting all the source code for generating the Rado CNFs. The C version of the code and its `Makefile` is also included, but will not automatically build when running the `process.sh` script. 
 - `process.sh` - The script that runs all the code with specific input.
 - ` ./glucose_SAT_solver` - Copy of the glucose SAT solver.
+- `./Example` - The directory containing example text files for the research paper. (CNF encoding and Loop unrolling example).
 
 Note that when running the code, an executatble SAT solver must be placed within the `./code` directory. At the moment, we coded our script to take in `satch` or `glucose` as SAT solver candidates. 
 

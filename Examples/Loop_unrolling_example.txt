@@ -1,0 +1,25 @@
+def write_positive_clauses(file_name, k, n):
+    file = open(file_name, "a")
+    index = 1
+    for _ in range(n):
+        for _ in range(k):
+            file.write(str(index) + " ")
+            index += 1
+        file.write("0 \n")
+
+    file.close()
+
+
+After loop unrolling, the inner loop that iterate through the $k$ different colors is eliminated, which reduces the generality of the algorithm. Example below shown the modification that generate $3-$coloring Rado Number problems only.
+
+def write_positive_clauses(file_name, k, n):
+    file = open(file_name, "a")
+    index = 1
+    for _ in range(n):
+        file.write(str(index) + " ")
+        file.write(str(index+1) + " ")
+        file.write(str(index+2) + " ")
+        index += 3
+        file.write("0 \n")
+
+    file.close()

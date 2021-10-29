@@ -83,7 +83,7 @@ then
 fi
 
 # RUN Shatter and/or SAT solver
-cd ./Rado_CNFs
+cd ./Testing
 echo "" > log.txt
 
 echo "Running solver..."
@@ -91,7 +91,7 @@ echo "Running solver..."
 
 # checking bounds bound
 echo "Checking upper bound..."
-./mapleSCIP.sh $UPPER_BOUND $k $A $sym_f >> log.txt
+./Rado_Generate.sh $UPPER_BOUND $k $A $sym_f >> log.txt
 FILE=$(find . -name "*n$UPPER_BOUND.cnf")
 UPPER_CNF=${FILE:2}
 ./$SOLVER $QUIET_FLAG $SAT_FLAG $FILE > $FILE.txt
