@@ -10,6 +10,72 @@ There are many conjectures about the theoretical quantity of Rado's number and t
 The use of Boolean algebra, particularly SAT, will be extensive. Each system of linear homogenous equation will be encoded into many clauses. Then, using SAT solvers, along with heavy optimization techniques both before and during the execution of the solver, solve the SAT problem in a reasonable time. 
 
 
+
+# Project Organization
+
+- `README.md` - This file. 
+- `./Shatter` - The directory containing the code to symmetrying breaking through Shatter and connected together thorough Perl scripting. 
+- `./Maple_files`- The directory containing the original Maple files to generate the Rado CNFs
+- `./Presentations` - The directory containting all the presentation slides for William Wesley and Yuan Chang, typeset in `Latex`.
+- `./code` - The directory containting all the source code for generating the Rado CNFs. The C version of the code and its `Makefile` is also included, but will not automatically build when running the `process.sh` script. 
+- `process.sh` - The script that runs all the code with specific input.
+- ` ./glucose_SAT_solver` - Copy of the glucose SAT solver.
+
+Note that when running the code, an executatble SAT solver must be placed within the `./code` directory. At the moment, we coded our script to take in `satch` or `glucose` as SAT solver candidates. 
+
+# How to Run the code
+
+1. Make sure to allow for execution of the bash and python scripts. 
+
+   ```bash
+   $ chmod a+x your_executable
+   ```
+
+2. Make sure to have `Maple` commandline version intalled. Modifiy the `Rado_Generate.sh` script line 11:
+
+   ```bash
+   your_maple_absolute_path -i isolve_maple.mpl -c "isolve_Maple($3);" -c "quit;"
+   ```
+
+3. The usage of `./process.sh` script:
+
+   ```bash
+   $./process.sh
+   usage: ./process.sh k A lb up sym_f
+   
+   k          Number of colors
+   A          Linear equation in 1 x n matrix form [a,b,c]
+   lb         Lower bound for the Rado number
+   up         Upper bound for the Rado number
+   sym_f      Symmetry breaking flag, 0 -> turn off
+   
+   -sat=      Select a SAT solver to opearte. Default to satch
+   -q|--quite Disable verbal response from SAT solver
+   
+   Input for k A and bounds are not checked for correctness.
+   This process script will use binary search to search for the Rado number 
+   of given settings.
+   ```
+
+4. Example: Find the 3-color Rado number for `x+y=z`
+
+   ```bash
+   $ ./process.sh 3 [1,1,-1] 5 15 0 -sat=satch -q
+   ----------- [ Start ] -----------
+   Running solver...
+   Checking upper bound...
+   Checking lower bound...
+   Searching...
+   10
+   13
+   14
+   ----------- [ Results ] ----------
+   Rado number for [1,1,-1] with 3-coloring is 14.
+   ----------- [ Done ] -------------
+   Time taken: 0 seconds
+   ```
+
+
 # Code Optimization
 
 The computation can be broken down into two steps:
