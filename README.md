@@ -1,5 +1,5 @@
 # SAT_Research
-Repo for all the files during SS2021 research project on Ramsey Theory and SAT solvers.
+This project is the collabration between Professor Jesus De Loera(UC Davis), William Wesley and Yuan Chang. The repository contains miscellaneous information and content for the ISAAC 2022 candidate research paper, code for running the research experiments and their logged optimizations.
 
 # Summary
 
@@ -21,6 +21,7 @@ The use of Boolean algebra, particularly SAT, will be extensive. Each system of 
 - `process.sh` - The script that runs all the code with specific input.
 - ` ./glucose_SAT_solver` - Copy of the glucose SAT solver.
 - `./Example` - The directory containing example text files for the research paper. (CNF encoding and Loop unrolling example).
+- `./paper_content` - The directory containing all files for extra information supporting the research paper for ISAAC 2022 conference.
 
 Note that when running the code, an executatble SAT solver must be placed within the `./code` directory. At the moment, we coded our script to take in `satch` or `glucose` as SAT solver candidates. 
 
@@ -138,4 +139,4 @@ Script that I modified:
 
 Project started June 26, 2021
 
-Last updated on Augest 25, 2021
+Last updated on Jan 24, 2022
