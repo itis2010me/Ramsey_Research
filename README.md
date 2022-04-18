@@ -7,25 +7,26 @@ The research focues on a subset of Ramsey Theory, Rado's theorems. Instead of lo
 
 There are many conjectures about the theoretical quantity of Rado's number and the degree of regurity. We wish to use the power of computer and boolean algebra to prove or dis-prove these conjectures. 
 
-The use of Boolean algebra, particularly SAT, will be extensive. Each system of linear homogenous equation will be encoded into many clauses. Then, using SAT solvers, along with heavy optimization techniques both before and during the execution of the solver, solve the SAT problem in a reasonable time. 
-
+The use of Boolean algebra, particularly SAT, will be extensive. Each system of linear homogenous equation will be encoded into many clauses. Then, using SAT solvers, along with optimization techniques both before and during the execution of the solver, solve the SAT problem in a reasonable time. 
 
 
 # Project Organization
 
 - `README.md` - This file. 
-- `./Shatter` - The directory containing the code to symmetrying breaking through Shatter and connected together thorough Perl scripting. 
+- `./Shatter` - The directory containing the code to symmetrying breaking through Shatter and connected together thorough a script written in Perl. 
 - `./Maple_files`- The directory containing the original Maple files to generate the Rado CNFs
 - `./Presentations` - The directory containting all the presentation slides for William Wesley and Yuan Chang, typeset in `Latex`.
-- `./code` - The directory containting all the source code for generating the Rado CNFs. The C version of the code and its `Makefile` is also included, but will not automatically build when running the `process.sh` script. 
-- `process.sh` - The script that runs all the code with specific input.
+- `./code` - The directory containting all the source code for generating the Rado CNFs. The C version of the code and its `Makefile` are also included, but will not automatically be built when running the `process.sh` script. 
+- `process.sh` - The script that runs all the code with specific input. 
 - ` ./glucose_SAT_solver` - Copy of the glucose SAT solver.
 - `./Example` - The directory containing example text files for the research paper. (CNF encoding and Loop unrolling example).
 - `./paper_content` - The directory containing all files for extra information supporting the research paper for ISAAC 2022 conference.
 
-Note that when running the code, an executatble SAT solver must be placed within the `./code` directory. At the moment, we coded our script to take in `satch` or `glucose` as SAT solver candidates. 
+Note that when running the code, a compiled and executatble SAT solver must be placed within the `./code` directory. At the moment, we coded our script to take in `satch` or `glucose` as SAT candidate solvers. 
 
 # How to Run the code
+
+Note: In order to try out the code, generate test files and compute, you need have both Python and Maple installed. If you wish to use the C++ version, you need to complie the executable yourself. 
 
 1. Make sure to allow for execution of the bash and python scripts. 
 
@@ -101,8 +102,6 @@ Added symmetry breaking clauses according to M.Heule's encoding.
 
 Next step, during the generation, generating all the possible solution for a linear equation with SCIP takes a significant amount of time. We are looking for linear algebra theorems to improve this part. 
 
-Aug 22
-
 Using Maple's `isolve` parametrization function, we can generate all possible solutions with python. 
 
 - The speedup is around 4.25x compare to using SCIP alone. 
@@ -139,4 +138,4 @@ Script that I modified:
 
 Project started June 26, 2021
 
-Last updated on Jan 24, 2022
+Last updated on April 17, 2022
