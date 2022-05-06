@@ -3,7 +3,7 @@ This project is the collabration between Professor Jesus De Loera(UC Davis), Wil
 
 # Summary
 
-The research focues on a subset of Ramsey Theory, Rado's theorems. Instead of looking at colored graphs, we are looking at large system(s) of linear homogenous equations and coloring the intergers to find solutions. 
+The research focuses on a subset of Ramsey Theory, Rado's theorems. Instead of looking at colored graphs, we are looking at large system(s) of linear homogenous equations and coloring the intergers to find solutions. 
 
 There are many conjectures about the theoretical quantity of Rado numbers and the degree of regularity. We wish to use the power of computer and Boolean algebra to prove or disprove these conjectures. 
 
