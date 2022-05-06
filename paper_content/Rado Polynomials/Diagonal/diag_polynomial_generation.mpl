@@ -1,0 +1,17 @@
+
+pairs := proc(symList, k) local L, i, j; L := []; for i in symList do for j to k do L := [op(L), [i, j]]; end do; end do; end proc;
+generateCNF := proc(symList, k, negClauses, fileID) local index, t, e, filename, f, numVars, numClauses, clause, color, clauseString, term, clauseCount, color1, color2; index := 1; t := table(); for e in pairs(symList, k) do t[op(e)] := index; index := index + 1; end do; filename := cat(convert(fileID, string), "_k", convert(k, string), ".cnf"); fclose(filename); f := fopen(filename, 'WRITE', 'TEXT'); numVars := numelems(symList)*k; numClauses := numelems(negClauses)*k + numelems(symList)*(1 + binomial(k, 2)); writeline(filename, cat("p ", "cnf ", convert(numVars, string), " ", convert(numClauses, string))); for clause in negClauses do for color to k do clauseString := ""; for term in clause do clauseString := cat(clauseString, convert(-t[term, color], string), " "); end do; clauseString := cat(clauseString, "0"); writeline(filename, clauseString); clauseCount := clauseCount + 1; end do; end do; for term in symList do clauseString := ""; for color to k do clauseString := cat(clauseString, convert(t[term, color], string), " "); end do; clauseString := cat(clauseString, "0"); writeline(filename, clauseString); end do; for term in symList do for color1 to k - 1 do for color2 from color1 + 1 to k do clauseString := cat(convert(-t[term, color1], string), " ", convert(-t[term, color2], string), " 0"); writeline(filename, clauseString); clauseCount := clauseCount + 1; end do; end do; end do; fclose(filename); end proc;
+diagSymListGen := proc(maxIterations) local minA, symList, gaps, iteration, i, j, gap; minA := 16; symList := {1, a, a^2, a^3, a - 1, a + 1, a^2 - 1, a^2 + 1, a^3 + a^2 - 2*a + 1}; gaps := {1, a, a^2, a - 1, a^2 - 2*a + 1}; iteration := 0; while iteration < maxIterations do for i in symList do for j in symList do gap := j - i; if type(expand(gap/(a - 1)), polynom(integer, {a})) and 1 <= subs(a = 1000, gap) and subs(a = 1000, gap) <= 999000000 then gaps := gaps union {expand(gap/(a - 1))}; symList := symList union {expand(a*gap/(a - 1))}; end if; end do; end do; for i in symList do for j in gaps do if aConditions(expand(i + (a - 1)*j)) then symList := symList union {expand(i + (a - 1)*j)}; if type(expand((i + (a - 1)*j)/a), polynom(integer, {a})) then gaps := gaps union {expand((i + (a - 1)*j)/a)}; end if; end if; if aConditions(expand(i - (a - 1)*j)) then symList := symList union {expand(i - (a - 1)*j)}; if type(expand((i - (a - 1)*j)/a), polynom(integer, {a})) then gaps := gaps union {expand((i - (a - 1)*j)/a)}; end if; end if; end do; end do; iteration := iteration + 1; end do; return symList; end proc;
+
+
+aConditions := proc(p) local aVal; for aVal from 16 to 100 do if `not`(1 <= subs(a = aVal, p) and subs(a = aVal, p) <= aVal^3 + (aVal - 1)^2) then return false; end if; end do; return true; end proc;
+negClauseGeneration := proc(sList, tList) local clauses, newList, s, sClauses, t, x, y, z; clauses := {}; newList := sList; for s in sList do sClauses := {}; for t in tList do x := s; y := expand(s - (a - 1)*t); z := expand(a*t); if aConditions(x) and aConditions(y) and aConditions(z) then sClauses := sClauses union {{x, y, z}}; newList := newList union {x, y, z}; end if; end do; clauses := clauses union sClauses; end do; return clauses, newList; end proc;
+
+P := diagSymListGen(3);
+C4 := negClauseGeneration(P, P);
+
+
+generateCNF(C4[2], 3, C4[1], "diagConj");
+numelems(C4[1]);
+P4;
+
