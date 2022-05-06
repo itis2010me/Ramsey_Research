@@ -5,9 +5,9 @@ This project is the collabration between Professor Jesus De Loera(UC Davis), Wil
 
 The research focues on a subset of Ramsey Theory, Rado's theorems. Instead of looking at colored graphs, we are looking at large system(s) of linear homogenous equations and coloring the intergers to find solutions. 
 
-There are many conjectures about the theoretical quantity of Rado's number and the degree of regurity. We wish to use the power of computer and boolean algebra to prove or dis-prove these conjectures. 
+There are many conjectures about the theoretical quantity of Rado numbers and the degree of regularity. We wish to use the power of computer and Boolean algebra to prove or disprove these conjectures. 
 
-The use of Boolean algebra, particularly SAT, will be extensive. Each system of linear homogenous equation will be encoded into many clauses. Then, using SAT solvers, along with optimization techniques both before and during the execution of the solver, solve the SAT problem in a reasonable time. 
+The use of Boolean algebra, particularly SAT, will be extensive. Each system of linear homogenous equation will be encoded into many clauses. Then, using SAT solvers, along with optimization techniques both before and during the execution of the solver, we solve the SAT problem in a reasonable time. 
 
 
 # Project Organization
@@ -26,7 +26,7 @@ Note that when running the code, a compiled and executatble SAT solver must be p
 
 # How to Run the code
 
-Note: In order to try out the code, generate test files and compute, you need have both Python and Maple installed. If you wish to use the C++ version, you need to complie the executable yourself. 
+Note: In order to try out the code, generate test files and compute, you need have both Python and Maple installed. If you wish to use the C++ version, you need to compile the executable yourself. 
 
 1. Make sure to allow for execution of the bash and python scripts. 
 
@@ -34,7 +34,7 @@ Note: In order to try out the code, generate test files and compute, you need ha
    $ chmod a+x your_executable
    ```
 
-2. Make sure to have `Maple` commandline version intalled. Modifiy the `Rado_Generate.sh` script line 11:
+2. Make sure to have `Maple` commandline version installed. Modifiy the `Rado_Generate.sh` script line 11:
 
    ```bash
    your_maple_absolute_path -i isolve_maple.mpl -c "isolve_Maple($3);" -c "quit;"
